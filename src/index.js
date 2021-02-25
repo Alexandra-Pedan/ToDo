@@ -1,0 +1,90 @@
+const addTaskBtn = document.querySelector("#add-task-btn");
+const deskTaskInput = document.querySelector("#description-task");
+const todosWrapper = document.querySelector(".todos-wrapper");
+
+let tasks =[];
+!localStorage.tasks ? task = [] : tasks = JSON.parse(localStorage.getItem("tasks"));
+
+let todoItemElems = [];
+
+function Task(description) {
+    this.description = description;
+    this.completed = false;
+}
+
+
+
+const createTemplate = (task, index) => {
+    return ` 
+         <div class="todo-item ${task.completed ? " checked" : "" }">
+                    <input onclick="completeTask(${index})" class="btn-complete" type="checkbox" ${task.completed ? "checked" : "" }>
+                     <div class="description">${task.description}</div>
+                    <i class="fas fa-trash-alt" onclick="deleteTask(${index})" class="btn-delete"></i>
+         </div>
+    `
+}
+   
+
+const filterTasks = () => {
+    const activeTasks = tasks.length && tasks.filter(item => item.completed === false);
+    const completedTasks = tasks.length && tasks.filter(item => item.completed === true);
+    tasks = [...activeTasks, ...completedTasks];
+}
+
+const fillHtmlList = () => {
+    todosWrapper.innerHTML = "";
+    if (tasks.length > 0) {
+        filterTasks();
+        tasks.forEach((item, index) => {
+            todosWrapper.innerHTML += createTemplate(item, index);
+        });
+        todoItemElems = document.querySelectorAll(".todo-item");
+    }
+
+}
+
+fillHtmlList();
+
+const updateLocal = () => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+const completeTask = index => {
+    tasks[index].completed = !tasks[index].completed;
+    if (tasks[index].completed) {
+        todoItemElems[index].classList.add("checked");
+    } else {
+        todoItemElems[index].classList.remove("checked");
+    }
+    updateLocal();
+    fillHtmlList();
+}
+
+addTaskBtn.addEventListener("click", handleSubmit);
+
+function handleSubmit() {
+    if (deskTaskInput.value === "") {
+        return alert('Please enter the task!')
+    } else {
+        tasks.push(new Task(deskTaskInput.value));
+        updateLocal();
+        fillHtmlList();
+        deskTaskInput.value = "";
+    }
+}
+
+document.addEventListener('keydown', function(event) {
+  if (event.which === 13) {
+    handleSubmit();
+  }
+});
+
+
+const deleteTask = index => {
+    todoItemElems[index].classList.add("delition");
+    setTimeout(() => {
+        tasks.splice(index, 1);
+    updateLocal();
+    fillHtmlList();
+   }, 500)
+}
