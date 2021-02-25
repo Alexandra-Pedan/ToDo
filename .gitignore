@@ -1,20 +1,20 @@
-# Ignore all files & folders & subfloders
-*
-# Ignore all files with .txt extension
-*.txt
-# Ignore specific file
-example.com
-# Ignore specific directory (nested)
-/dist
-# Ignore specific files in specific directory
-/dist/*.jpg
-# Ignore specific files in specific directory (nested)
-/dist/**/*.jpg
-# Ignore directory except single file
-/dist/*
-!/dist/example.txt
-# Ignore files by mask in name (will work with /dist/img/a/test.jpg, /dist/img/a1/test.jpeg etc)
-/dist/img/a?/*.jp?g
+# # Ignore all files & folders & subfloders
+# *
+# # Ignore all files with .txt extension
+# *.txt
+# # Ignore specific file
+# example.com
+# # Ignore specific directory (nested)
+# /dist
+# # Ignore specific files in specific directory
+# /dist/*.jpg
+# # Ignore specific files in specific directory (nested)
+# /dist/**/*.jpg
+# # Ignore directory except single file
+# /dist/*
+# !/dist/example.txt
+# # Ignore files by mask in name (will work with /dist/img/a/test.jpg, /dist/img/a1/test.jpeg etc)
+# /dist/img/a?/*.jp?g
 
 
 # Logs
